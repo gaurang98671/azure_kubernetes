@@ -3,13 +3,13 @@ provider "azurerm"{
 }
 
 resource "azurerm_resource_group" "kubernetesRG" {
-    name = "demoresourcegroup"
+    name = var.resource_grp
     location = "Central India"
   
 }
 
 resource "azurerm_kubernetes_cluster" "testCluster" {
-  name                = "testCluster"
+  name                = var.cluster_name
   location            = azurerm_resource_group.kubernetesRG.location
   resource_group_name = azurerm_resource_group.kubernetesRG.name
   dns_prefix          = "exampleaks1"
