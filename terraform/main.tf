@@ -4,7 +4,7 @@ provider "azurerm"{
 
 resource "azurerm_resource_group" "kubernetesRG" {
     name = var.resource_grp
-    location = "Central India"
+    location = var.location
   
 }
 
