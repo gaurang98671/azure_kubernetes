@@ -8,11 +8,15 @@ resource "azurerm_resource_group" "kubernetesRG" {
   
 }
 
+
 resource "azurerm_kubernetes_cluster" "testCluster" {
   name                = var.cluster_name
   location            = azurerm_resource_group.kubernetesRG.location
   resource_group_name = azurerm_resource_group.kubernetesRG.name
   dns_prefix          = "exampleaks1"
+  depends_on =[azurerm_resource_group.kubernetesRG]
+
+
 
   default_node_pool {
     name       = "default"

@@ -1,18 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: testApp
+  name: testapp
+  labels:
+    app: testapp
 spec:
   selector:
     matchLabels:
-      app: testApp
+      app: testapp
   template:
     metadata:
       labels:
-        app: testApp
+        app: testapp
     spec:
       containers:
-      - name: testApp
+      - name: testcontainer
         image: gaurang98671/myapp
         ports:
         - containerPort: 8080
@@ -20,10 +22,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-service
+  name: testservice
 spec:
   selector:
-    app: testApp
+    app: testapp
   ports:
-  - port: 8080
+  - port: 80
     targetPort: 8080
+  
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: guestbook
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: testservice
+          servicePort: 80
+
